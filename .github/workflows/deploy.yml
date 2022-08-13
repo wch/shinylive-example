@@ -1,0 +1,51 @@
+name: Deploy Shinylive application
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install shiny
+        run: pip install shiny
+
+      - name: Make shinylive deployment in docs/
+        run: shiny static myapp docs
+
+      # =====================================================
+      # Commit to gh-pages branch
+      # =====================================================
+      # Name and email are needed to push.
+      - name: Configure git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Push to gh-pages branch
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          export SHA_SHORT=$(git rev-parse --short HEAD)
+          git checkout -B gh-pages
+          touch docs/.nojekyll
+          git add docs
+          git commit -m"Build docs/ for $SHA_SHORT"
+          git log -n 4 --pretty=oneline --simplify-by-decoration
+          git push -f origin gh-pages:gh-pages
