@@ -18,6 +18,8 @@ jobs:
 
       - name: Install shinylive
         run: pip install shinylive
+        # Note that you can also specify a version of shinylive, as in:
+        #   pip install shinylive==0.0.8
 
       - name: Make shinylive deployment in docs/
         run: shinylive export myapp docs
