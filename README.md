@@ -5,8 +5,15 @@ This repository demonstrates how to deploy Shinylive applications to GitHub Page
 
 [Shiny for Python](https://shiny.rstudio.com/py) applications can be deployed with [Shinylive](https://shiny.rstudio.com/py/docs/shinylive.html), which lets them run entirely within the browser without the need for Python running on a server. Instead, Python runs in the web browser, using Pyodide, which is a version of Python compiled to WebAssembly.
 
-* See the application in action here: https://wch.github.io/shinylive-example/
-* A view of the application with an interactive editor: https://wch.github.io/shinylive-example/edit/ (Note that editing the code on this page will only modify the copy running in the user's browser; it will not modify the deployed application.)
+See the live example here:
+[![Example app](shinylive-example.png)](https://wch.github.io/shinylive-example/)
+
+See the application with an interactive editor:
+[![Example app with editor view](shinylive-example-edit.png)](https://wch.github.io/shinylive-example/edit/)
+(Note that editing the code on this page will only modify the copy running in the user's browser; it will not modify the deployed application.)
+
+
+## Creating the repository on GitHub
 
 First, make sure you have recent versions of the `shiny` and `shinylive` Python packages:
 
